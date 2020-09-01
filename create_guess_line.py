@@ -11,14 +11,13 @@ GUESS_INDEX_TUPLE = (
 #print (len(GUESS_INDEX_TUPLE))
 
 def create_guess_line(guess_no,word_length)->str:
-	line='Guess '
-	guess_no_str=str(guess_no)
-	
 	(start,end)=GUESS_INDEX_TUPLE[word_length-6][guess_no-1]
 	
-	#print(start,end)	#fot test	
+	line='Guess '
+	guess_no_str=str(guess_no)
 	line+=guess_no_str
 	line+=' '
+	
 	for i in range(0, start):
 		
 		line += '| - '
