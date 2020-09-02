@@ -16,11 +16,11 @@ __date__ = "01/09/2020"
 
 def select_word_at_random(word_select)->str:
     '''document'''
-    if  word_select == 'FIXED' or word_select =='ARBITRARY'  :
-        word_list = load_words(word_select)
-        number = random_index(word_list)
-        word = word_list[number]
-        return word
+    if  word_select == 'FIXED':
+        return (load_words(word_select)[random_index(word_select)])
+    
+    elif word_select !='ARBITRARY':
+        return (load_words(word_select)[random_index(word_select)]) 
     else:
         return None      
 
@@ -131,48 +131,49 @@ def main()->None:
     while True:
         word_select = input("Do you want a 'FIXED' or 'ARBITRARY' length word?: ")
         word = select_word_at_random(word_select)
-
+                
         if word != None: 
+            print('Now try and guess the word, step by step!!')
+                
+            word_length = len(word)
+            scores = ()
+
+            for guess_no in range(1,len(word)):
+        
+                display_guess_matrix (guess_no,word_length,scores)
+        
+                Now_enter_Guess = 'Now enter Guess '
+                Now_enter_Guess += str(guess_no)
+                Now_enter_Guess += ': '
+        
+                start_index = GUESS_INDEX_TUPLE[word_length-6][guess_no-1][0]
+                end_index = GUESS_INDEX_TUPLE[word_length-6][guess_no-1][1]
+                right_guess_len = end_index - start_index  + 1
+
+                while True:
+                    guess = input(Now_enter_Guess)
+            
+                    if len(guess) == right_guess_len:
+                        break
+    
+                Score_for_round = compute_value_for_guess(word,start_index,end_index,guess)
+                Score_for_round_tutle = (Score_for_round,)
+                scores += Score_for_round_tutle
+
+            guess_no = word_length
+            display_guess_matrix (guess_no,word_length,scores)
+            
+            guess = input('Now enter your final guess. i.e. guess the whole word: ')
+
+            if guess == word :
+                print ('You have guessed the word correctly. Congratulations.')
+
+            elif guess != word :
+                print ('Your guess was wrong. The correct word was "%s"' % (word))
             break
-    
-    print('Now try and guess the word, step by step!!')
-                
-    word_length = len(word)
-    scores = ()
-
-    for guess_no in range(1,len(word)):
+        break        
         
-        display_guess_matrix (guess_no,word_length,scores)
-        
-        Now_enter_Guess = 'Now enter Guess '
-        Now_enter_Guess += str(guess_no)
-        Now_enter_Guess += ': '
-        
-        start_index = GUESS_INDEX_TUPLE[word_length-6][guess_no-1][0]
-        end_index = GUESS_INDEX_TUPLE[word_length-6][guess_no-1][1]
-        right_guess_len = end_index - start_index  + 1
 
-        while True:
-            guess = input(Now_enter_Guess)
-            
-            if len(guess) == right_guess_len:
-                break
-    
-        Score_for_round = compute_value_for_guess(word,start_index,end_index,guess)
-        Score_for_round_tutle = (Score_for_round,)
-        scores += Score_for_round_tutle
 
-    guess_no = word_length
-    display_guess_matrix (guess_no,word_length,scores)
-            
-    guess = input('Now enter your final guess. i.e. guess the whole word: ')
-
-    if guess == word :
-        print ('You have guessed the word correctly. Congratulations.')
-
-    elif guess != word :
-        print ('Your guess was wrong. The correct word was "%s"' % (word))
-    
-                
 if __name__ == "__main__":
 	main()

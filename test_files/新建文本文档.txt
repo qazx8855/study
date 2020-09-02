@@ -1,0 +1,98 @@
+Windows PowerShell
+版权所有 (C) Microsoft Corporation。保留所有权利。
+
+尝试新的跨平台 PowerShell https://aka.ms/pscore6
+
+PS D:\study> & C:/Users/qazx8/AppData/Local/Programs/Python/Python38/python.exe d:/study/test_a1.py
+/------------------------------------------------------------------------------\
+|                              Summary of Results                              |
+\------------------------------------------------------------------------------/
+TestDesign: 3/3
+    + 1. test no prints on import
+    + 2. test all functions are defined correctly
+    + 3. test all functions have documentation strings
+TestSelectWordAtRandom: 2/5
+    + 1. test select random word from fixed
+    - 2. test select random word from arbitrary
+    + 3. test select random word from fixed 2
+    - 4. test select random word from arbitrary 2
+    - 5. test invalid word_select returns None
+TestCreateGuessLine: 5/5
+    + 1. test guess 1 length 6
+    + 2. test guess 1 length 9
+    + 3. test guess 6 length 6
+    + 4. test guess 9 length 9
+    + 5. test guess 4 length 7
+TestDisplayGuessMatrix: 4/4
+    + 1. test display_guess_matrix guess 1 length 6
+    + 2. test display_guess_matrix guess 2 length 6
+    + 3. test display_guess_matrix guess 3 length 6
+    + 4. test display_guess_matrix guess 9 length 9
+TestComputeValueForGuess: 7/7
+    + 1. test no score
+    + 2. test vowel match wrong index
+    + 3. test vowel match index
+    + 4. test consonant match wrong index
+    + 5. test consonant match index
+    + 6. test multiple matches
+    + 7. test guess in word not substring
+TestMain: 7/8
+    + 1. test main help action
+    + 2. test quit action
+    + 3. test invalid action
+    + 4. test invalid action
+    + 5. test main FIXED win
+    - 6. test main ARBITRARY win
+    + 7. test main FIXED lose
+    + 8. test main FIXED with invalid length
+TestNoPrint: 1/1
+    + check for no unexpected prints
+--------------------------------------------------------------------------------
+/------------------------------------------------------------------------------\
+|                             Failed/Skipped Tests                             |
+\------------------------------------------------------------------------------/
+================================================================================
+FAIL: TestSelectWordAtRandom 2. test select random word from arbitrary
+--------------------------------------------------------------------------------
+    Traceback (most recent call last):
+      File "test_a1.py", line 112, in test_select_arbitrary
+        self.assertEqual(actual, 'comrade')
+    AssertionError: None != 'comrade'
+
+================================================================================
+FAIL: TestSelectWordAtRandom 4. test select random word from arbitrary 2
+--------------------------------------------------------------------------------
+    Traceback (most recent call last):
+      File "test_a1.py", line 124, in test_select_arbitrary_2
+        self.assertEqual(actual, 'unmasked')
+    AssertionError: None != 'unmasked'
+
+================================================================================
+FAIL: TestSelectWordAtRandom 5. test invalid word_select returns None
+--------------------------------------------------------------------------------
+    Traceback (most recent call last):
+      File "test_a1.py", line 129, in test_none
+        self.assertIsNone(actual)
+    AssertionError: 'cornmeal' is not None
+
+================================================================================
+ERROR: TestMain 6. test main ARBITRARY win
+--------------------------------------------------------------------------------
+    Traceback (most recent call last):
+      File "test_a1.py", line 308, in test_main_arbitrary_win
+        self.assertMain('main_arbitrary_win.in', 'main_arbitrary_win.out')  # comrade
+      File "test_a1.py", line 276, in assertMain
+        expected, result, stdio = self._run_main(file_in, file_out, stop_early=stop_early)
+      File "test_a1.py", line 260, in _run_main
+        result = self.a1.main()
+      File "a1.py", line 134, in main
+        word = select_word_at_random(word_select)
+      File "a1.py", line 24, in select_word_at_random
+        return (load_words(word_select)[random_index(load_words(word_select))])
+      File "a1_support.py", line 54, in load_words
+        with open(f"WORDS_{word_select}.txt", "r") as file:
+    FileNotFoundError: [Errno 2] No such file or directory: 'WORDS_co.txt'
+
+--------------------------------------------------------------------------------
+Ran 33 tests in 0.234 seconds with 29 passed/0 skipped/4 failed.
+PS D:\study>
