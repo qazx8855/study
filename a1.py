@@ -15,7 +15,14 @@ __date__ = "01/09/2020"
 # Write your code here (i.e. functions)
 
 def select_word_at_random(word_select)->str:
-    '''document'''
+    '''
+    This function will first judge the input parameters is 'FIXED' or 'ARBITRARY' or not,
+    if the answer is yes, then it will load word list form corresponding text file, and 
+    then it will create a random number from range of length of word list. Finally, it will
+    return a random word. If the input is not 'FIXED' or 'ARBITRARY', the function will 
+    return None.
+    '''
+
     if  word_select == 'FIXED' or word_select =='ARBITRARY'  :
         word_list = load_words(word_select)
         number = random_index(word_list)
@@ -24,16 +31,23 @@ def select_word_at_random(word_select)->str:
     else:
         return None      
 
-def create_guess_line(guess_no,word_length)->str:
-    '''document'''
 
+def create_guess_line(guess_no,word_length)->str:
+    '''
+    This function is used to create a guess line, which include two parts: 
+    1.Guess number (To show how many times the user guess)
+    2.Create a one line matrix by using loop to show the position of the guessed alphabet.
+    These will be saved in a string and the string will be returned in the end. 
+    '''
+    
     (start,end)=GUESS_INDEX_TUPLE[word_length-6][guess_no-1]
 
-    line='Guess '
+    #Create Guess number
+    line='Guess '          
     line+=str(guess_no)
     
-
-    for i in range(0, start):
+    #Create guess line matrix
+    for i in range(0, start):       
         line += '| - '
 
     for i in range(start,end+1):
@@ -46,9 +60,16 @@ def create_guess_line(guess_no,word_length)->str:
     line +='|'
     return line
 
-def display_guess_matrix(guess_no,word_length,scores) ->None:
-    '''document'''
 
+def display_guess_matrix(guess_no,word_length,scores) ->None:
+    '''
+    This function is focus on create a guess matrix which include three parts:
+    1. The top line which used as title
+    2. A dividing line by use several '-'
+    3. Use function 'create_guess_line' repeatedly .
+    '''
+
+    #Create top line
     top_line = '       '
     
     for i in range(1,word_length+1):
@@ -58,16 +79,21 @@ def display_guess_matrix(guess_no,word_length,scores) ->None:
     
     top_line += '|'
 
+    #Create dividing_line
     dividing_line = WALL_HORIZONTAL * (9 + 4 * word_length)
 
+    #Print title
     print(top_line)
     print(dividing_line)
 
+    #Create and print martix
+    #Create and print martix in user first guess
     if guess_no == 1:
         guess_line = create_guess_line(guess_no,word_length)
         print(guess_line)
         print(dividing_line)
 
+    #Create and print martix in user guess(Not first guess)
     elif guess_no > 1 :
         for i in range(1 , guess_no+1):
             if i< guess_no :
@@ -84,14 +110,19 @@ def display_guess_matrix(guess_no,word_length,scores) ->None:
                 print(guess_line)
                 print(dividing_line)
 
+
 def compute_value_for_guess(word,start_index,end_index,guess)-> int:
-    '''document'''
+    '''
+    This function will count how many scores the user will get in one guess.
+    '''
 
     scores = 0
+    #Cut whole word to get right answer. 
     right_guess = word[start_index:end_index+1]  
     
     for i in range(0,len(right_guess)):
         
+        #
         if guess[i] == right_guess[i]:
             if guess[i] in VOWELS:
                 scores += 14
@@ -103,7 +134,7 @@ def compute_value_for_guess(word,start_index,end_index,guess)-> int:
                 scores += 5
     
     return scores
-
+    
 
 def main()->None:
     '''
